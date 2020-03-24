@@ -79,6 +79,45 @@ name = first_name + ' ' + second_name
   - `name[0]` --> `'B'`
   - `name[-1]` -> '`b`'
 
+### String Formatting
+
+#### String Formatting Exercise \# 1
+
+- Write function that gets a person's name as parameter, and greets
+them with `Hi {Person}`.
+
+```python
+def greeting(name):
+return f"Hi {name}"
+```
+
+#### String Formatting Exercise \# 2
+
+- Write a function that returns greeting but with name properly
+capitalised, so ian becomes Ian.
+
+```python
+def greeting(name):
+return f"Hi {name.title()}"
+```
+
+#### Summary of Older Formatting Techniques
+
+- `c` style:
+
+```python
+name = "Bob"
+age = 45
+print("Hi %s, you're %d years old." % (name, age))
+```
+
+- Using `.format`:
+
+```python
+name = "Bob"
+age = 45
+print("Hi {}, you're {} years old".format(name, age))
+```
 
 
 ################################################################################
