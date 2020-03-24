@@ -14,19 +14,21 @@
 ## Strings
 
 - Strings in Python can be declared using single, double, or triple quotes:
-        ```
-        msg = 'Welcome'
-        msg = "Welcome"
-        msg = """Welcome"""
-        ```
+
+```
+msg = 'Welcome'
+msg = "Welcome"
+msg = """Welcome"""
+```
 
 - What's important is consistency.  Pick one method and stick to it, for style purposes.
 - What is we want to quote within a quote:
-        ```
-        msg = "And he said: "Hello there!""    # produces an error
-        msg = "And he said: 'Hello there!'"    # works.
-        msg = 'And he said: "Hello there!"'    # works.
-        ```
+
+```
+msg = "And he said: "Hello there!""    # produces an error
+msg = "And he said: 'Hello there!'"    # works.
+msg = 'And he said: "Hello there!"'    # works.
+```
 
 ### String Escape Characters/Sequences
 
@@ -48,12 +50,13 @@
 
 - Add two strings together.
 - Very simple example:
-        ```
-        first_name = "Bob"
-        surname = "Bobbit"
-        name = first_name + surname
-        name = first_name + ' ' + second_name
-        ```
+
+```
+first_name = "Bob"
+surname = "Bobbit"
+name = first_name + surname
+name = first_name + ' ' + second_name
+```
 
 - Concatenation only works on strings:
   - Trying to concatenate an integer with a string would fail. `"The date is " + 2019`
