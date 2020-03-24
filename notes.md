@@ -88,7 +88,7 @@ them with `Hi {Person}`.
 
 ```python
 def greeting(name):
-return f"Hi {name}"
+    return f"Hi {name}"
 ```
 
 #### String Formatting Exercise \# 2
@@ -98,7 +98,7 @@ capitalised, so ian becomes Ian.
 
 ```python
 def greeting(name):
-return f"Hi {name.title()}"
+    return f"Hi {name.title()}"
 ```
 
 #### Summary of Older Formatting Techniques
