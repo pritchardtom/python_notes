@@ -24,7 +24,7 @@ msg = """Welcome"""
 - What's important is consistency.  Pick one method and stick to it, for style purposes.
 - What is we want to quote within a quote:
 
-```
+```python
 msg = "And he said: "Hello there!""    # produces an error
 msg = "And he said: 'Hello there!'"    # works.
 msg = 'And he said: "Hello there!"'    # works.
@@ -34,13 +34,17 @@ msg = 'And he said: "Hello there!"'    # works.
 
 - These are common across programming languages.
 - What if you wanted to declare a variable `msg` and format it's output to look like this:
-        ```
-        Welcome to the system.
-        Please remember to logout when leaving.
-        ```
+
+```
+Welcome to the system.
+Please remember to logout when leaving.
+```
 
 - Escape Sequences come to the rescue:
-  - `msg = "Welcome to the system. \nPlease remember to logout when leaving."`
+
+```python
+msg = "Welcome to the system. \nPlease remember to logout when leaving."
+```
 
 - Could also use `\'` or `\"` to print relevant punctuation marks.
 - List of Python Escape Sequences: https://docs.python.org/3/reference/lexical_analysis.html
@@ -51,7 +55,7 @@ msg = 'And he said: "Hello there!"'    # works.
 - Add two strings together.
 - Very simple example:
 
-```
+```python
 first_name = "Bob"
 surname = "Bobbit"
 name = first_name + surname
