@@ -15,7 +15,7 @@
 
 - Strings in Python can be declared using single, double, or triple quotes:
 
-```
+```python
 msg = 'Welcome'
 msg = "Welcome"
 msg = """Welcome"""
