@@ -98,3 +98,36 @@ print(ctypes.c_long.from_address(id(name)).value) # output: 1
 
 
 ### Garbage Collection
+
+- As documented, Python keeps track of all references to objects in memory.
+- When the **reference count** of an object reaches zero, the Python Memory Manager destroys object/reclaims memory.
+- However, sometimes this doesn't work.
+  - Particularly when dealing with **circular references**, which reference counting cannot detect.
+
+#### Circular References Example
+
+- Let's create a simple circular reference example:
+
+```python
+class A(object):
+        def __init__(self):
+                self.b = B(self)  # pass instance of A to B
+                print(f"A: self: {hex(id(self))}, b: {hex(id(self.b))}")
+
+
+class B(object):
+        def __init__(self, a):
+                self.a = a
+                print(f"B: self: {hex(id(self))}, a: {hex(id(self.a))}")
+
+
+cir_ref = A()
+
+```
+
+- Printed output of this will look similar to:
+
+```
+B: self: 0x103225400, a: 0x103225390
+A: self: 0x103225390, b: 0x103225400
+```
