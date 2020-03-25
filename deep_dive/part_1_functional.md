@@ -73,4 +73,28 @@ print(id(default_name))         # 4501509168
 - However, there's a way which does this for us, and is therefore preferable to `sys.getrefcount()`
 
 
-#### Method Two: ``
+#### Method Two: Using `ctypes`
+
+```python
+import ctypes
+
+name = "Bob Boblaw"
+print(ctypes.c_long.from_address(id(name)).value) # output: 1
+
+default_name = name
+print(ctypes.c_long.from_address(id(name)).value) # output: 2
+
+default_name = None
+print(ctypes.c_long.from_address(id(name)).value) # output: 1
+
+```
+
+- But why does this `ctypes` function give the correct Reference Count for `name`, when `sys.getrefcount()` failed?
+- Because the `ctypes` function passes the memory address, and not the reference itself, only a temporary pointer to `name` is used.
+- This pointer is created via the `id(name)` value passed to the `ctypes` function.
+- By the time it is received by the `ctypes` function, the temporary reference/pointer is gone.
+- This is why we get the correct values, without having to subtract `1`.
+- Recall that `sys.getrefcount()` passed the actual *reference* (i.e., the variable `name`), which created this additional count.
+
+
+### Garbage Collection
