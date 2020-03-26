@@ -104,11 +104,13 @@ print(ctypes.c_long.from_address(id(name)).value) # output: 1
 - However, sometimes this doesn't work.
   - Particularly when dealing with **circular references**, which reference counting cannot detect.
 
-#### Circular References Example
+#### Circular References Example (with Garbage Collection)
 
 - Let's create a simple circular reference example:
 
 ```python
+import ctypes
+
 class A(object):
         def __init__(self):
                 self.b = B(self)  # pass instance of A to B
@@ -121,13 +123,102 @@ class B(object):
                 print(f"B: self: {hex(id(self))}, a: {hex(id(self.a))}")
 
 
-cir_ref = A()
+circ_ref = A()
 
 ```
 
 - Printed output of this will look similar to:
 
 ```
-B: self: 0x103225400, a: 0x103225390
-A: self: 0x103225390, b: 0x103225400
+B: self: 0x103a253c8, a: 0x103a25278
+A: self: 0x103a25278, b: 0x103a253c8
 ```
+
+- We can confirm all this via:
+
+```python
+print(hex(id(circ_ref)))      # output: 0x103a25278
+print(hex(id(circ_ref.b)))    # output: 0x103a253c8
+print(hex(id(circ_ref.b.a)))  # output: 0x103a25278
+```
+
+- And check the reference count of these:
+
+```python
+
+print(ctypes.c_long.from_address(id(circ_ref)).value)     # output: 2
+print(ctypes.c_long.from_address(id(circ_ref.b)).value)   # output: 1
+print(ctypes.c_long.from_address(id(circ_ref.b.a)).value) # output: 2
+
+```
+
+- Now, let's save the memory addresses of each into separate variables:
+
+```python
+a_id = id(circ_ref)
+b_id = id(circ_ref.b)
+```
+
+- How does Python handle this:
+
+```
+circ_ref = None
+```
+
+- If we search in
+
+def object_by_id(object_id):
+    for obj in gc.get_objects():
+        if id(obj) == object_id:
+            return "Object exists"
+    return "Not found"
+
+
+### Variable Reassignment
+
+- How does Python handle variable reassignment?
+
+```python
+
+age = 42
+print(hex(id(age))) # output: 0x10096cea0
+
+age = 42 + 1
+print(hex(id(age))) # output: 0x10096cec0
+
+```
+
+- The memory address of `age` is different each time.  Why?
+- We do not change the value inside of the object `age` during reassignment.
+- Instead Python creates a new object, and the reference of `age` will be updated to point to this new object in memory.
+- What about if two objects have the same value?
+
+```python
+
+balance = 100
+deposit = 100
+
+# these two point to same object in memory:
+print(hex(id(balance))) # output: 0x10096d5e0
+print(hex(id(deposit))) # output: 0x10096d5e0
+
+# we alter deposit, it points to new object at different memory address:
+deposit = 0
+print(hex(id(deposit))) # output: 0x10096c960
+
+# what if we reassign it back to 100?
+deposit = 100
+print(hex(id(deposit))) # output: 0x10096d5e0
+
+# it points back to the same memory address as balance.
+
+```
+
+- This behaviour will be explored more in different section.
+
+
+#
+#
+#
+#
+#
